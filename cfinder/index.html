@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFinder - Advanced Code Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .search-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .stats-bar {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .results-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .results-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            height: 600px;
+            overflow-y: auto;
+        }
+
+        .panel-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+        }
+
+        .result-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .result-item:hover {
+            background: #e3f2fd;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .result-file {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .result-path {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .result-preview {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .highlight {
+            background: #ffd700;
+            color: #000;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .workspace-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            background: #f8f9fa;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: #e3f2fd;
+        }
+
+        @media (max-width: 768px) {
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CFinder</h1>
+            <p>Advanced Multi-Search Tool for Large Codebases</p>
+        </div>
+
+        <div class="workspace-info">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3>Workspace Status</h3>
+                    <p id="workspace-status">No workspace loaded</p>
+                </div>
+                <div>
+                    <strong id="indexed-files">0</strong> files indexed
+                </div>
+            </div>
+        </div>
+
+        <div class="search-panel">
+            <div class="upload-area" id="upload-area">
+                <h3>📁 Load Workspace</h3>
+                <p>Drag & drop files here or click to select</p>
+                <input type="file" id="file-input" multiple style="display: none;">
+                <button onclick="document.getElementById('file-input').click()" style="margin-top: 10px; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                    Select Files
+                </button>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-input" id="search-input" placeholder="Search code, functions, variables, comments...">
+                <button class="search-btn" onclick="performSearch()">🔍 Search</button>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label>File Type:</label>
+                    <select class="filter-select" id="file-type">
+                        <option value="">All Types</option>
+                        <option value=".js">JavaScript</option>
+                        <option value=".py">Python</option>
+                        <option value=".java">Java</option>
+                        <option value=".cpp">C++</option>
+                        <option value=".cs">C#</option>
+                        <option value=".php">PHP</option>
+                        <option value=".rb">Ruby</option>
+                        <option value=".go">Go</option>
+                        <option value=".ts">TypeScript</option>
+                        <option value=".html">HTML</option>
+                        <option value=".css">CSS</option>
+                        <option value=".json">JSON</option>
+                        <option value=".xml">XML</option>
+                        <option value=".md">Markdown</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Search Mode:</label>
+                    <select class="filter-select" id="search-mode">
+                        <option value="content">Content</option>
+                        <option value="filename">Filename</option>
+                        <option value="function">Functions</option>
+                        <option value="variable">Variables</option>
+                        <option value="comment">Comments</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Case Sensitive:</label>
+                    <input type="checkbox" id="case-sensitive">
+                </div>
+                <div class="filter-group">
+                    <label>Regex:</label>
+                    <input type="checkbox" id="regex-mode">
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="total-files">0</div>
+                <div class="stat-label">Total Files</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="search-results">0</div>
+                <div class="stat-label">Search Results</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="search-time">0ms</div>
+                <div class="stat-label">Search Time</div>
+            </div>
+        </div>
+
+        <div class="results-container">
+            <div class="results-panel">
+                <div class="panel-title">📄 File Results</div>
+                <div id="file-results">
+                    <div class="no-results">
+                        <p>Load files and start searching to see results</p>
+                    </div>
+                </div>
+            </div>
+            <div class="results-panel">
+                <div class="panel-title">🔍 Content Matches</div>
+                <div id="content-results">
+                    <div class="no-results">
+                        <p>Content matches will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class CFinder {
+            constructor() {
+                this.files = [];
+                this.searchIndex = new Map();
+                this.currentResults = [];
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                const fileInput = document.getElementById('file-input');
+                const uploadArea = document.getElementById('upload-area');
+                const searchInput = document.getElementById('search-input');
+
+                fileInput.addEventListener('change', (e) => this.handleFiles(e.target.files));
+                
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('dragover');
+                });
+                
+                uploadArea.addEventListener('dragleave', () => {
+                    uploadArea.classList.remove('dragover');
+                });
+                
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('dragover');
+                    this.handleFiles(e.dataTransfer.files);
+                });
+
+                searchInput.addEventListener('input', () => {
+                    if (searchInput.value.trim()) {
+                        this.debounceSearch();
+                    }
+                });
+
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
+
+            async handleFiles(files) {
+                const fileArray = Array.from(files);
+                this.showLoading();
+
+                for (const file of fileArray) {
+                    if (file.size > 50 * 1024 * 1024) { // Skip files larger than 50MB
+                        continue;
+                    }
+
+                    const content = await this.readFile(file);
+                    const fileData = {
+                        name: file.name,
+                        path: file.webkitRelativePath || file.name,
+                        content: content,
+                        size: file.size,
+                        type: this.getFileType(file.name),
+                        lastModified: file.lastModified
+                    };
+
+                    this.files.push(fileData);
+                    this.indexFile(fileData);
+                }
+
+                this.updateStats();
+                this.updateWorkspaceInfo();
+                this.clearResults();
+            }
+
+            readFile(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsText(file);
+                });
+            }
+
+            getFileType(filename) {
+                const ext = filename.substring(filename.lastIndexOf('.'));
+                return ext.toLowerCase();
+            }
+
+            indexFile(fileData) {
+                const words = fileData.content.toLowerCase().split(/\W+/);
+                const lines = fileData.content.split('\n');
+                
+                words.forEach((word, index) => {
+                    if (word.length > 2) {
+                        if (!this.searchIndex.has(word)) {
+                            this.searchIndex.set(word, []);
+                        }
+                        this.searchIndex.get(word).push({
+                            file: fileData,
+                            position: index,
+                            context: this.getContext(fileData.content, word)
+                        });
+                    }
+                });
+
+                // Index function names, variables, etc.
+                this.indexCodeStructures(fileData, lines);
+            }
+
+            indexCodeStructures(fileData, lines) {
+                const functionRegex = /function\s+(\w+)|def\s+(\w+)|class\s+(\w+)/g;
+                const variableRegex = /(?:var|let|const)\s+(\w+)|(\w+)\s*=/g;
+                
+                lines.forEach((line, lineNumber) => {
+                    let match;
+                    
+                    // Index functions
+                    while ((match = functionRegex.exec(line)) !== null) {
+                        const funcName = match[1] || match[2] || match[3];
+                        if (funcName) {
+                            if (!this.searchIndex.has(`func:${funcName.toLowerCase()}`)) {
+                                this.searchIndex.set(`func:${funcName.toLowerCase()}`, []);
+                            }
+                            this.searchIndex.get(`func:${funcName.toLowerCase()}`).push({
+                                file: fileData,
+                                line: lineNumber + 1,
+                                context: line.trim(),
+                                type: 'function'
+                            });
+                        }
+                    }
+                    
+                    // Index variables
+                    while ((match = variableRegex.exec(line)) !== null) {
+                        const varName = match[1] || match[2];
+                        if (varName && varName.length > 2) {
+                            if (!this.searchIndex.has(`var:${varName.toLowerCase()}`)) {
+                                this.searchIndex.set(`var:${varName.toLowerCase()}`, []);
+                            }
+                            this.searchIndex.get(`var:${varName.toLowerCase()}`).push({
+                                file: fileData,
+                                line: lineNumber + 1,
+                                context: line.trim(),
+                                type: 'variable'
+                            });
+                        }
+                    }
+                });
+            }
+
+            getContext(content, searchTerm) {
+                const index = content.toLowerCase().indexOf(searchTerm.toLowerCase());
+                if (index === -1) return '';
+                
+                const start = Math.max(0, index - 50);
+                const end = Math.min(content.length, index + searchTerm.length + 50);
+                return content.substring(start, end);
+            }
+
+            search(query) {
+                if (!query.trim()) {
+                    this.clearResults();
+                    return;
+                }
+
+                const startTime = performance.now();
+                const searchMode = document.getElementById('search-mode').value;
+                const fileType = document.getElementById('file-type').value;
+                const caseSensitive = document.getElementById('case-sensitive').checked;
+                const regexMode = document.getElementById('regex-mode').checked;
+
+                let results = [];
+
+                if (searchMode === 'filename') {
+                    results = this.searchFilenames(query, fileType, caseSensitive, regexMode);
+                } else if (searchMode === 'function') {
+                    results = this.searchFunctions(query, fileType, caseSensitive);
+                } else if (searchMode === 'variable') {
+                    results = this.searchVariables(query, fileType, caseSensitive);
+                } else {
+                    results = this.searchContent(query, fileType, caseSensitive, regexMode);
+                }
+
+                const endTime = performance.now();
+                this.displayResults(results, endTime - startTime);
+            }
+
+            searchContent(query, fileType, caseSensitive, regexMode) {
+                const results = [];
+                const searchTerm = caseSensitive ? query : query.toLowerCase();
+                
+                this.files.forEach(file => {
+                    if (fileType && !file.name.endsWith(fileType)) return;
+                    
+                    const content = caseSensitive ? file.content : file.content.toLowerCase();
+                    const lines = file.content.split('\n');
+                    
+                    if (regexMode) {
+                        try {
+                            const regex = new RegExp(searchTerm, caseSensitive ? 'g' : 'gi');
+                            lines.forEach((line, index) => {
+                                const matches = line.match(regex);
+                                if (matches) {
+                                    results.push({
+                                        file: file,
+                                        line: index + 1,
+                                        content: line,
+                                        matches: matches.length
+                                    });
+                                }
+                            });
+                        } catch (e) {
+                            // Invalid regex, fall back to normal search
+                        }
+                    } else {
+                        lines.forEach((line, index) => {
+                            const searchLine = caseSensitive ? line : line.toLowerCase();
+                            if (searchLine.includes(searchTerm)) {
+                                results.push({
+                                    file: file,
+                                    line: index + 1,
+                                    content: line,
+                                    matches: (searchLine.match(new RegExp(searchTerm, 'g')) || []).length
+                                });
+                            }
+                        });
+                    }
+                });
+                
+                return results.sort((a, b) => b.matches - a.matches);
+            }
+
+            searchFilenames(query, fileType, caseSensitive, regexMode) {
+                const results = [];
+                const searchTerm = caseSensitive ? query : query.toLowerCase();
+                
+                this.files.forEach(file => {
+                    if (fileType && !file.name.endsWith(fileType)) return;
+                    
+                    const filename = caseSensitive ? file.name : file.name.toLowerCase();
+                    let match = false;
+                    
+                    if (regexMode) {
+                        try {
+                            const regex = new RegExp(searchTerm, caseSensitive ? '' : 'i');
+                            match = regex.test(filename);
+                        } catch (e) {
+                            match = filename.includes(searchTerm);
+                        }
+                    } else {
+                        match = filename.includes(searchTerm);
+                    }
+                    
+                    if (match) {
+                        results.push({
+                            file: file,
+                            type: 'filename',
+                            relevance: this.calculateRelevance(filename, searchTerm)
+                        });
+                    }
+                });
+                
+                return results.sort((a, b) => b.relevance - a.relevance);
+            }
+
+            searchFunctions(query, fileType, caseSensitive) {
+                const results = [];
+                const searchKey = `func:${caseSensitive ? query : query.toLowerCase()}`;
+                
+                if (this.searchIndex.has(searchKey)) {
+                    this.searchIndex.get(searchKey).forEach(item => {
+                        if (!fileType || item.file.name.endsWith(fileType)) {
+                            results.push(item);
+                        }
+                    });
+                }
+                
+                return results;
+            }
+
+            searchVariables(query, fileType, caseSensitive) {
+                const results = [];
+                const searchKey = `var:${caseSensitive ? query : query.toLowerCase()}`;
+                
+                if (this.searchIndex.has(searchKey)) {
+                    this.searchIndex.get(searchKey).forEach(item => {
+                        if (!fileType || item.file.name.endsWith(fileType)) {
+                            results.push(item);
+                        }
+                    });
+                }
+                
+                return results;
+            }
+
+            calculateRelevance(text, searchTerm) {
+                const exactMatch = text === searchTerm ? 100 : 0;
+                const startsWith = text.startsWith(searchTerm) ? 50 : 0;
+                const contains = text.includes(searchTerm) ? 25 : 0;
+                return exactMatch + startsWith + contains;
+            }
+
+            displayResults(results, searchTime) {
+                this.currentResults = results;
+                
+                document.getElementById('search-results').textContent = results.length;
+                document.getElementById('search-time').textContent = `${Math.round(searchTime)}ms`;
+                
+                this.renderFileResults(results);
+                this.renderContentResults(results);
+            }
+
+            renderFileResults(results) {
+                const fileResults = document.getElementById('file-results');
+                
+                if (results.length === 0) {
+                    fileResults.innerHTML = '<div class="no-results"><p>No files found matching your search</p></div>';
+                    return;
+                }
+
+                // Group results by file
+                const fileMap = new Map();
+                results.forEach(result => {
+                    const fileName = result.file.name;
+                    if (!fileMap.has(fileName)) {
+                        fileMap.set(fileName, {
+                            file: result.file,
+                            matches: 0
+                        });
+                    }
+                    fileMap.get(fileName).matches++;
+                });
+
+                const fileArray = Array.from(fileMap.values())
+                    .sort((a, b) => b.matches - a.matches)
+                    .slice(0, 50); // Limit to top 50 files
+
+                fileResults.innerHTML = fileArray.map(item => `
+                    <div class="result-item" onclick="selectFile('${item.file.name}')">
+                        <div class="result-file">${item.file.name}</div>
+                        <div class="result-path">${item.file.path}</div>
+                        <div style="font-size: 0.85rem; color: #666;">
+                            ${item.matches} matches • ${this.formatFileSize(item.file.size)}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            renderContentResults(results) {
+                const contentResults = document.getElementById('content-results');
+                
+                if (results.length === 0) {
+                    contentResults.innerHTML = '<div class="no-results"><p>No content matches found</p></div>';
+                    return;
+                }
+
+                const limitedResults = results.slice(0, 100); // Limit to top 100 matches
+                
+                contentResults.innerHTML = limitedResults.map(result => `
+                    <div class="result-item">
+                        <div class="result-file">${result.file.name}</div>
+                        <div class="result-path">Line ${result.line || 'Unknown'}</div>
+                        <div class="result-preview">${this.highlightMatches(result.content || result.context || '', document.getElementById('search-input').value)}</div>
+                    </div>
+                `).join('');
+            }
+
+            highlightMatches(text, searchTerm) {
+                if (!searchTerm || !text) return text;
+                
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                return text.replace(regex, '<span class="highlight">$1</span>');
+            }
+
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            updateStats() {
+                document.getElementById('total-files').textContent = this.files.length;
+                document.getElementById('indexed-files').textContent = this.files.length;
+            }
+
+            updateWorkspaceInfo() {
+                const status = this.files.length > 0 ? 
+                    `${this.files.length} files loaded` : 
+                    'No workspace loaded';
+                document.getElementById('workspace-status').textContent = status;
+            }
+
+            showLoading() {
+                document.getElementById('file-results').innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Indexing files...</p>
+                    </div>
+                `;
+            }
+
+            clearResults() {
+                document.getElementById('file-results').innerHTML = '<div class="no-results"><p>Load files and start searching to see results</p></div>';
+                document.getElementById('content-results').innerHTML = '<div class="no-results"><p>Content matches will appear here</p></div>';
+                document.getElementById('search-results').textContent = '0';
+                document.getElementById('search-time').textContent = '0ms';
+            }
+
+            debounceSearch() {
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = setTimeout(() => {
+                    this.search(document.getElementById('search-input').value);
+                }, 300);
+            }
+        }
+
+        // Initialize CFinder
+        const cfinder = new CFinder();
+
+        // Global functions
+        function performSearch() {
+            const query = document.getElementById('search-input').value.trim();
+            if (query) {
+                cfinder.search(query);
+            }
+        }
+
+        function selectFile(filename) {
+            const file = cfinder.files.find(f => f.name === filename);
+            if (file) {
+                // You could implement file preview here
+                console.log('Selected file:', file);
+            }
+        }
+    </script>
+</body>
+</html>

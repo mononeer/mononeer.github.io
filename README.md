@@ -34,7 +34,7 @@ It's like having a Swiss Army knife, but for code, and without the weird toothpi
 ## 🏗️ Coming Soon (Probably)
 
 More tools being forged in the solo engineering fires:
-- **BugZapper** - Makes bugs disappear (or at least easier to find)
+- **BugZap** - Makes bugs disappear (or at least easier to find)
 - **DeployBot** - Pushes code while you push up (at the gym or on the couch)
 - **MergeMate** - Handles your Git merges so you don't have to talk to coworkers
 

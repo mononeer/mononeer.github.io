@@ -6,77 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
-    :root{
-      --bg:#000;
-      --fg:#00BFFF;
-      --glow:#0096FF33;
-    }
+    :root{--bg:#000;--fg:#00BFFF;--glow:#0096FF33;--glass:#111a}
     *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:'Courier Prime',monospace;
-      background:var(--bg);
-      color:var(--fg);
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
-    }
-    header{
-      padding:1.5rem;
-      backdrop-filter:blur(8px);
-      border-bottom:1px solid var(--glow);
-    }
-    nav a{
-      margin-right:1rem;
-      color:var(--fg);
-      text-decoration:none;
-      font-weight:700;
-    }
+    body{font-family:'Courier Prime',monospace;background:linear-gradient(135deg,#000 0%,#001122 100%);color:var(--fg);min-height:100vh;display:flex;flex-direction:column}
+    header{padding:1.5rem 2rem;backdrop-filter:blur(8px);border-bottom:1px solid var(--glow)}
+    nav a{margin-right:1rem;color:var(--fg);font-weight:700;text-decoration:none}
     nav a:hover{text-decoration:underline}
     main{flex:1;padding:2rem}
-    section{max-width:800px;margin:auto}
-    .fade{opacity:0;transition:opacity .4s ease-in}
-    .fade.show{opacity:1}
-
-    /* cards */
-    .card{
-      background:#111a;
-      border:1px solid var(--glow);
-      border-radius:8px;
-      padding:1.2rem;
-      margin-bottom:1.5rem;
-      box-shadow:0 0 10px var(--glow);
-    }
-    .card h2{margin-bottom:.5rem}
-    .card small{opacity:.7}
-
-    /* form */
+    section{max-width:800px;margin:auto;display:none}
+    section.active{display:block}
+    .card{background:var(--glass);border:1px solid var(--glow);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 0 12px var(--glow)}
+    footer{text-align:center;padding:1rem;font-size:.8rem;border-top:1px solid var(--glow)}
+    #social-bar svg{width:20px;height:20px;fill:var(--fg);margin-right:.6rem}
+    #social-bar a:hover svg{fill:#fff}
     form label{display:block;margin:.6rem 0}
-    form input,form textarea{
-      width:100%;
-      background:#111;
-      border:1px solid var(--glow);
-      color:var(--fg);
-      padding:.5rem;
-      font-family:inherit;
-    }
-    form button{
-      background:var(--fg);
-      color:var(--bg);
-      border:none;
-      padding:.6rem 1.2rem;
-      font-weight:700;
-      cursor:pointer;
-    }
-    footer{
-      text-align:center;
-      padding:1rem;
-      font-size:.8rem;
-      border-top:1px solid var(--glow);
-    }
-    #social-bar svg{
-      width:18px;height:18px;fill:var(--fg);margin-right:.6rem
-    }
-    #social-bar a:hover svg{fill:var(--accent)}
+    form input,form textarea{width:100%;padding:.6rem;background:#111;border:1px solid var(--glow);color:var(--fg);font-family:inherit;border-radius:4px}
+    form button{padding:.6rem 1.2rem;background:var(--fg);color:var(--bg);border:none;font-weight:700;cursor:pointer;border-radius:4px}
+    form button:hover{background:#fff}
   </style>
 </head>
 <body>
@@ -93,27 +39,27 @@
 
 <main>
   <!-- HOME -->
-  <section id="home" class="fade">
-    <p>Welcome to my black & azure corner.</p>
-    <div id="gh-graph"></div>
+  <section id="home">
+    <p>Welcome to the black & azure corner of the web.</p>
+    <img id="gh-graph" src="https://ghchart.rshah.org/00BFFF/mononeer" alt="GitHub graph" style="max-width:100%;border-radius:8px"/>
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects" class="fade">
+  <section id="projects">
     <h2>Current Repos</h2>
-    <ul id="repo-list">Loading…</ul>
+    <ul id="repo-list" class="card">Loading…</ul>
   </section>
 
   <!-- BLOG -->
-  <section id="blog" class="fade">
+  <section id="blog">
     <h2>Blog</h2>
-    <div id="blog-list">Loading…</div>
+    <div id="blog-list" class="card">Loading…</div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="fade">
+  <section id="contact">
     <h2>About / Contact</h2>
-    <p>I’m mononeer. Find me everywhere:</p>
+    <p>Hi, I’m mononeer. Find me everywhere:</p>
     <div id="social-bar">
       <a href="https://x.com/mononeer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231z"/></svg></a>
       <a href="https://patreon.com/mononeer" target="_blank"><svg viewBox="0 0 24 24"><path d="M22.01 7.858a5.57 5.57 0 0 0-2.33-2.47C18.46 4.5 16.38 4 13.5 4c-2.88 0-4.97.5-6.2 1.39-1.23.88-1.85 2.27-1.85 4.17v6.25c0 1.9.62 3.29 1.85 4.17 1.23.88 3.32 1.39 6.2 1.39 2.88 0 4.96-.5 6.18-1.39 1.22-.88 1.84-2.27 1.84-4.17V9.96c.01-.69-.07-1.37-.24-2.102z"/></svg></a>
@@ -131,26 +77,24 @@
 
 <footer>© Mononeer</footer>
 
-<script type="module">
-// --- helpers ---
-const fadeIn = el => { el.classList.add('show'); };
-const $ = s => document.querySelector(s);
-
-// --- router (hash-based SPA) ---
+<script>
+// --- router ---
 const sections = ['home','projects','blog','contact'];
 function route() {
   const hash = location.hash.slice(1) || 'home';
-  sections.forEach(s => $(`#${s}`)?.classList.remove('show'));
-  fadeIn($(`#${hash}`));
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.toggle('active', id===hash);
+  });
 }
 window.addEventListener('hashchange', route);
-route();
+window.addEventListener('load', route);
 
 // --- projects ---
-async function loadRepos() {
-  const list = $('#repo-list');
-  const repos = await fetch('https://api.github.com/users/mononeer/repos?per_page=20&sort=updated').then(r=>r.json());
-  list.innerHTML = repos.map(r=>`
+async function loadRepos(){
+  const list=document.getElementById('repo-list');
+  const repos=await fetch('https://api.github.com/users/mononeer/repos?per_page=100&sort=updated').then(r=>r.json());
+  list.innerHTML=repos.map(r=>`
     <li class="card">
       <strong><a href="${r.html_url}" target="_blank">${r.name}</a></strong>
       <p>${r.description||''}</p>
@@ -158,39 +102,38 @@ async function loadRepos() {
     </li>`).join('');
 }
 loadRepos();
-setInterval(loadRepos, 30_000); // live refresh every 30 s
+setInterval(loadRepos, 30_000);
 
 // --- blog ---
-const parseYML = txt => {
-  const [meta,...body] = txt.split('\n---\n');
+const parseYML = txt=>{
+  const [meta,...body]=txt.split('\n---\n');
   const obj={};
   meta.split('\n').forEach(l=>{
-    const [k,v] = l.split(': ');
-    if(k) obj[k.trim()] = v.trim();
+    const [k,v]=l.split(': ');
+    if(k) obj[k.trim()]=v.trim();
   });
-  obj.content = body.join('\n---\n').trim();
+  obj.content=body.join('\n---\n').trim();
   return obj;
 };
-async function loadBlog() {
-  const holder = $('#blog-list');
-  try {
-    const index = await(fetch('../posts/index.json').then(r=>r.json()));
-    const posts = await Promise.all(index.map(slug=>
-      fetch(`../posts/${slug}.yml`).then(r=>r.text()).then(parseYML)
-    ));
-    holder.innerHTML = posts.map(p=>`
-      <article class="card">
-        <h2>${p.title}</h2>
-        <small>${p.date}</small>
-        ${p.content.split('\n').map(l=>`<p>${l}</p>`).join('')}
-      </article>`).join('');
-  } catch(e){ holder.textContent='No posts yet.'; }
+async function loadBlog(){
+  const holder=document.getElementById('blog-list');
+  try{
+    const index=await fetch('posts/index.json').then(r=>r.json());
+    holder.innerHTML='';
+    for(const slug of index){
+      const raw=await fetch(`posts/${slug}.yml`).then(r=>r.text());
+      const {title,date,content}=parseYML(raw);
+      holder.insertAdjacentHTML('beforeend',`
+        <article class="card">
+          <h2>${title}</h2>
+          <small>${date}</small>
+          ${content.split('\n').map(l=>`<p>${l}</p>`).join('')}
+        </article>`);
+    }
+  }catch{holder.textContent='No posts yet.';}
 }
 loadBlog();
-setInterval(loadBlog, 30_000); // auto-update when you add a new .yml
-
-// --- github graph ---
-$('#gh-graph').innerHTML = `<img src="https://ghchart.rshah.org/00BFFF/mononeer" alt="GitHub graph" style="max-width:100%;border-radius:8px">`;
+setInterval(loadBlog, 30_000);
 </script>
 </body>
 </html>

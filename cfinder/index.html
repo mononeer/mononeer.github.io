@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFinder Pro - Advanced Code Search</title>
+    <title>CFinder - Advanced Code Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-dark: #121212;
@@ -18,29 +19,26 @@
             --success: #66bb6a;
             --warning: #ffb74d;
             --error: #f44336;
+            --info: #29b6f6;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg-dark);
             min-height: 100vh;
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
         }
-
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
-
         .header {
             text-align: center;
             margin-bottom: 30px;
@@ -48,7 +46,6 @@
             padding-bottom: 20px;
             border-bottom: 1px solid var(--bg-panel-light);
         }
-
         .header h1 {
             font-size: 3.5rem;
             font-weight: 700;
@@ -58,13 +55,11 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-
         .header p {
             font-size: 1.2rem;
             opacity: 0.8;
             color: var(--text-secondary);
         }
-
         .search-panel {
             background: var(--bg-panel);
             border-radius: 12px;
@@ -73,13 +68,11 @@
             box-shadow: 0 8px 30px rgba(0,0,0,0.3);
             border: 1px solid var(--bg-panel-light);
         }
-
         .search-container {
             display: flex;
             gap: 15px;
             margin-bottom: 20px;
         }
-
         .search-input {
             flex: 1;
             padding: 15px 20px;
@@ -88,16 +81,14 @@
             border: 2px solid var(--bg-panel-light);
             border-radius: 8px;
             font-size: 16px;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             transition: all 0.3s ease;
         }
-
         .search-input:focus {
             outline: none;
             border-color: var(--accent-primary);
             box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
         }
-
         .search-btn {
             padding: 15px 30px;
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
@@ -108,21 +99,21 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-
         .search-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(79, 195, 247, 0.3);
         }
-
         .filters {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
             align-items: center;
         }
-
         .filter-group {
             display: flex;
             align-items: center;
@@ -131,12 +122,10 @@
             padding: 8px 12px;
             border-radius: 8px;
         }
-
         .filter-label {
             font-size: 14px;
             color: var(--text-secondary);
         }
-
         .filter-select {
             padding: 8px 12px;
             background: var(--bg-darker);
@@ -144,15 +133,13 @@
             border: 1px solid var(--bg-panel-light);
             border-radius: 6px;
             font-size: 14px;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         .filter-checkbox {
             width: 20px;
             height: 20px;
             accent-color: var(--accent-primary);
         }
-
         .stats-bar {
             background: var(--bg-panel);
             padding: 15px 30px;
@@ -162,29 +149,27 @@
             justify-content: space-between;
             align-items: center;
             border: 1px solid var(--bg-panel-light);
+            flex-wrap: wrap;
+            gap: 15px;
         }
-
         .stat-item {
             text-align: center;
+            min-width: 120px;
         }
-
         .stat-value {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--accent-primary);
         }
-
         .stat-label {
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
-
         .results-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-
         .results-panel {
             background: var(--bg-panel);
             border-radius: 12px;
@@ -193,7 +178,6 @@
             overflow-y: auto;
             border: 1px solid var(--bg-panel-light);
         }
-
         .panel-title {
             font-size: 1.3rem;
             font-weight: 600;
@@ -205,7 +189,6 @@
             align-items: center;
             gap: 10px;
         }
-
         .result-item {
             background: var(--bg-darker);
             border: 1px solid var(--bg-panel-light);
@@ -215,14 +198,12 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
         .result-item:hover {
             background: var(--bg-panel-light);
             border-color: var(--accent-primary);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(79, 195, 247, 0.15);
         }
-
         .result-file {
             font-weight: 600;
             color: var(--accent-primary);
@@ -231,14 +212,12 @@
             align-items: center;
             gap: 8px;
         }
-
         .result-path {
             font-size: 0.85rem;
             color: var(--text-secondary);
             margin-bottom: 8px;
             font-family: 'Courier New', Courier, monospace;
         }
-
         .result-preview {
             background: #1a1a1a;
             color: var(--text-primary);
@@ -251,25 +230,21 @@
             white-space: pre;
             position: relative;
         }
-
         .highlight {
             background: var(--highlight);
             color: #000;
             font-weight: bold;
         }
-
         .no-results {
             text-align: center;
             padding: 40px;
             color: var(--text-secondary);
         }
-
         .loading {
             text-align: center;
             padding: 40px;
             color: var(--accent-primary);
         }
-
         .spinner {
             border: 3px solid rgba(243, 243, 243, 0.1);
             border-top: 3px solid var(--accent-primary);
@@ -279,12 +254,10 @@
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
         .workspace-info {
             background: var(--bg-panel);
             border-radius: 12px;
@@ -292,7 +265,6 @@
             margin-bottom: 20px;
             border: 1px solid var(--bg-panel-light);
         }
-
         .upload-area {
             border: 2px dashed var(--bg-panel-light);
             border-radius: 12px;
@@ -303,17 +275,14 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
         .upload-area:hover {
             border-color: var(--accent-primary);
             background: rgba(79, 195, 247, 0.1);
         }
-
         .upload-area.dragover {
             border-color: var(--accent-primary);
             background: rgba(79, 195, 247, 0.2);
         }
-
         .visualization-panel {
             background: var(--bg-panel);
             border-radius: 12px;
@@ -321,7 +290,6 @@
             margin-top: 20px;
             border: 1px solid var(--bg-panel-light);
         }
-
         .visualization-title {
             font-size: 1.3rem;
             font-weight: 600;
@@ -333,27 +301,23 @@
             align-items: center;
             gap: 10px;
         }
-
         .visualization-container {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-
         .visualization-item {
             background: var(--bg-darker);
             border-radius: 8px;
             padding: 15px;
             border: 1px solid var(--bg-panel-light);
         }
-
         .visualization-path {
             font-size: 0.9rem;
             color: var(--text-secondary);
             margin-bottom: 10px;
             font-family: 'Courier New', Courier, monospace;
         }
-
         .visualization-content {
             background: #1a1a1a;
             border-radius: 6px;
@@ -367,7 +331,6 @@
             max-height: 300px;
             overflow-y: auto;
         }
-
         .line-number {
             display: inline-block;
             width: 40px;
@@ -376,13 +339,11 @@
             padding-right: 10px;
             user-select: none;
         }
-
         .visualization-highlight {
             background: rgba(255, 215, 64, 0.3);
             border-left: 3px solid var(--highlight);
             padding-left: 5px;
         }
-
         .visualization-summary {
             margin-top: 10px;
             padding-top: 10px;
@@ -390,31 +351,28 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
-
         .match-count {
             color: var(--accent-primary);
             font-weight: bold;
         }
-
         @media (max-width: 768px) {
             .results-container {
                 grid-template-columns: 1fr;
             }
-            
             .filters {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
             .search-container {
                 flex-direction: column;
             }
-            
             .header h1 {
                 font-size: 2.5rem;
             }
+            .stat-item {
+                min-width: 100px;
+            }
         }
-
         .status-bar {
             display: flex;
             justify-content: space-between;
@@ -425,7 +383,6 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
-
         .file-icon {
             width: 24px;
             height: 24px;
@@ -436,15 +393,212 @@
             justify-content: center;
             font-size: 14px;
         }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .action-btn {
+            padding: 8px 15px;
+            background: var(--bg-panel-light);
+            color: var(--text-primary);
+            border: 1px solid var(--bg-panel);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .action-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        .export-btn {
+            background: var(--accent-secondary);
+            color: white;
+            border: 1px solid var(--accent-secondary);
+        }
+        .export-btn:hover {
+            background: #9c64f4;
+            border-color: #9c64f4;
+        }
+        .recent-searches {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--bg-panel-light);
+        }
+        .recent-searches h3 {
+            margin-bottom: 10px;
+            color: var(--accent-primary);
+        }
+        .recent-searches-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .recent-search-tag {
+            background: var(--bg-panel-light);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .recent-search-tag:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+        .search-history {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--bg-darker);
+            border-radius: 8px;
+            border: 1px solid var(--bg-panel-light);
+        }
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid var(--bg-panel-light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .history-item:hover {
+            background: var(--bg-panel-light);
+        }
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        .history-query {
+            font-weight: 500;
+            color: var(--accent-primary);
+        }
+        .history-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--bg-panel-light);
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .tab.active {
+            border-bottom: 3px solid var(--accent-primary);
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .code-editor {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;
+            white-space: pre;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .line-numbers {
+            color: #858585;
+            text-align: right;
+            padding-right: 15px;
+            user-select: none;
+        }
+        .code-content {
+            color: #d4d4d4;
+        }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .function { color: #dcdcaa; }
+        .variable { color: #9cdcfe; }
+        .number { color: #b5cea8; }
+        .operator { color: #d4d4d4; }
+        .search-highlight {
+            background: rgba(255, 215, 64, 0.3);
+            border-bottom: 1px solid var(--highlight);
+        }
+        .bookmark {
+            position: absolute;
+            left: 5px;
+            color: var(--warning);
+            cursor: pointer;
+        }
+        .bookmark:hover {
+            color: #ff9800;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            background: var(--bg-panel);
+            border-left: 4px solid var(--accent-primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        .notification.success {
+            border-left-color: var(--success);
+        }
+        .notification.error {
+            border-left-color: var(--error);
+        }
+        .keyboard-shortcuts {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--bg-darker);
+            border-radius: 8px;
+            border: 1px solid var(--bg-panel-light);
+        }
+        .shortcut-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--bg-panel-light);
+        }
+        .shortcut-item:last-child {
+            border-bottom: none;
+        }
+        .shortcut-keys {
+            display: flex;
+            gap: 5px;
+        }
+        .key {
+            background: var(--bg-panel);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>CFinder Pro</h1>
-            <p>Advanced Dark-Themed Search Tool for Large Codebases</p>
+            <h1>CFinder</h1>
+            <p>Advanced Search Tool for Large Codebases</p>
         </div>
-
         <div class="workspace-info">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
@@ -456,22 +610,21 @@
                 </div>
             </div>
         </div>
-
         <div class="search-panel">
             <div class="upload-area" id="upload-area">
-                <h3>📁 Load Workspace</h3>
+                <h3><i class="fas fa-folder-open"></i> Load Workspace</h3>
                 <p>Drag & drop files here or click to select</p>
                 <input type="file" id="file-input" multiple style="display: none;">
-                <button onclick="document.getElementById('file-input').click()" style="margin-top: 10px; padding: 10px 20px; background: var(--accent-primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-family: 'Courier New', Courier, monospace;">
+                <button onclick="document.getElementById('file-input').click()" style="margin-top: 10px; padding: 10px 20px; background: var(--accent-primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
                     Select Files
                 </button>
             </div>
-
             <div class="search-container">
                 <input type="text" class="search-input" id="search-input" placeholder="Search code, functions, variables, comments..." autocomplete="off">
-                <button class="search-btn" onclick="performSearch()">🔍 Search</button>
+                <button class="search-btn" onclick="performSearch()">
+                    <i class="fas fa-search"></i> Search
+                </button>
             </div>
-
             <div class="filters">
                 <div class="filter-group">
                     <span class="filter-label">File Type:</span>
@@ -511,9 +664,18 @@
                     <span class="filter-label">Regex:</span>
                     <input type="checkbox" id="regex-mode" class="filter-checkbox">
                 </div>
+                <div class="filter-group">
+                    <span class="filter-label">Whole Word:</span>
+                    <input type="checkbox" id="whole-word" class="filter-checkbox">
+                </div>
+            </div>
+            <div class="recent-searches">
+                <h3><i class="fas fa-history"></i> Recent Searches</h3>
+                <div class="recent-searches-list" id="recent-searches">
+                    <!-- Recent searches will be added here -->
+                </div>
             </div>
         </div>
-
         <div class="stats-bar">
             <div class="stat-item">
                 <div class="stat-value" id="total-files">0</div>
@@ -531,12 +693,19 @@
                 <div class="stat-value" id="match-count">0</div>
                 <div class="stat-label">Total Matches</div>
             </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="save-results">
+                    <i class="fas fa-save"></i> Save Results
+                </button>
+                <button class="action-btn export-btn" id="export-results">
+                    <i class="fas fa-file-export"></i> Export
+                </button>
+            </div>
         </div>
-
         <div class="results-container">
             <div class="results-panel">
                 <div class="panel-title">
-                    <div class="file-icon">📄</div>
+                    <div class="file-icon"><i class="fas fa-file-code"></i></div>
                     File Results
                 </div>
                 <div id="file-results">
@@ -547,7 +716,7 @@
             </div>
             <div class="results-panel">
                 <div class="panel-title">
-                    <div class="file-icon">🔍</div>
+                    <div class="file-icon"><i class="fas fa-search"></i></div>
                     Content Matches
                 </div>
                 <div id="content-results">
@@ -557,23 +726,72 @@
                 </div>
             </div>
         </div>
-
         <div class="visualization-panel">
-            <div class="visualization-title">
-                <div class="file-icon">🗺️</div>
+            <div class="panel-title">
+                <div class="file-icon"><i class="fas fa-project-diagram"></i></div>
                 Search Visualization
             </div>
-            <div class="visualization-container" id="visualization-container">
-                <div class="no-results">
-                    <p>Search results will be visualized here with context</p>
+            <div class="tabs">
+                <div class="tab active" data-tab="visualization">Visualization</div>
+                <div class="tab" data-tab="code">Code View</div>
+                <div class="tab" data-tab="history">Search History</div>
+            </div>
+            <div class="tab-content active" id="visualization-tab">
+                <div class="visualization-container" id="visualization-container">
+                    <div class="no-results">
+                        <p>Search results will be visualized here with context</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="code-tab">
+                <div class="code-editor">
+                    <div class="line-numbers" id="line-numbers"></div>
+                    <div class="code-content" id="code-content"></div>
+                </div>
+            </div>
+            <div class="tab-content" id="history-tab">
+                <div class="search-history" id="search-history">
+                    <div class="no-results">
+                        <p>No search history yet</p>
+                    </div>
                 </div>
             </div>
         </div>
-
+        <div class="keyboard-shortcuts">
+            <h3><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h3>
+            <div class="shortcut-item">
+                <span>Search</span>
+                <div class="shortcut-keys">
+                    <span class="key">Ctrl</span> + <span class="key">Enter</span>
+                </div>
+            </div>
+            <div class="shortcut-item">
+                <span>Focus Search</span>
+                <div class="shortcut-keys">
+                    <span class="key">/</span>
+                </div>
+            </div>
+            <div class="shortcut-item">
+                <span>Save Results</span>
+                <div class="shortcut-keys">
+                    <span class="key">Ctrl</span> + <span class="key">S</span>
+                </div>
+            </div>
+            <div class="shortcut-item">
+                <span>Export Results</span>
+                <div class="shortcut-keys">
+                    <span class="key">Ctrl</span> + <span class="key">E</span>
+                </div>
+            </div>
+        </div>
         <div class="status-bar">
-            <div>CFinder Pro v1.2</div>
+            <div>CFinder Pro v2.0</div>
             <div id="status-message">Ready</div>
         </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        <div id="notification-message"></div>
     </div>
 
     <script>
@@ -583,55 +801,99 @@
                 this.searchIndex = new Map();
                 this.currentResults = [];
                 this.matchCount = 0;
+                this.searchHistory = JSON.parse(localStorage.getItem('cfinderHistory')) || [];
+                this.bookmarks = JSON.parse(localStorage.getItem('cfinderBookmarks')) || [];
                 this.setupEventListeners();
                 this.updateStatus("Ready to search");
+                this.loadRecentSearches();
+                this.renderSearchHistory();
             }
-
+            
             setupEventListeners() {
                 const fileInput = document.getElementById('file-input');
                 const uploadArea = document.getElementById('upload-area');
                 const searchInput = document.getElementById('search-input');
-
-                fileInput.addEventListener('change', (e) => this.handleFiles(e.target.files));
+                const saveBtn = document.getElementById('save-results');
+                const exportBtn = document.getElementById('export-results');
+                const tabs = document.querySelectorAll('.tab');
                 
+                fileInput.addEventListener('change', (e) => this.handleFiles(e.target.files));
                 uploadArea.addEventListener('dragover', (e) => {
                     e.preventDefault();
                     uploadArea.classList.add('dragover');
                 });
-                
                 uploadArea.addEventListener('dragleave', () => {
                     uploadArea.classList.remove('dragover');
                 });
-                
                 uploadArea.addEventListener('drop', (e) => {
                     e.preventDefault();
                     uploadArea.classList.remove('dragover');
                     this.handleFiles(e.dataTransfer.files);
                 });
-
                 searchInput.addEventListener('input', () => {
                     if (searchInput.value.trim()) {
                         this.debounceSearch();
                     }
                 });
-
                 searchInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
                         performSearch();
                     }
                 });
+                saveBtn.addEventListener('click', () => this.saveResults());
+                exportBtn.addEventListener('click', () => this.exportResults());
+                
+                // Tab switching
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        tabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        const tabName = tab.getAttribute('data-tab');
+                        document.querySelectorAll('.tab-content').forEach(content => {
+                            content.classList.remove('active');
+                        });
+                        document.getElementById(`${tabName}-tab`).classList.add('active');
+                    });
+                });
+                
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey && e.key === 'Enter') {
+                        e.preventDefault();
+                        performSearch();
+                    }
+                    if (e.key === '/') {
+                        e.preventDefault();
+                        searchInput.focus();
+                    }
+                    if (e.ctrlKey && e.key === 's') {
+                        e.preventDefault();
+                        this.saveResults();
+                    }
+                    if (e.ctrlKey && e.key === 'e') {
+                        e.preventDefault();
+                        this.exportResults();
+                    }
+                });
+                
+                // Recent searches
+                document.getElementById('recent-searches').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('recent-search-tag')) {
+                        const query = e.target.textContent;
+                        document.getElementById('search-input').value = query;
+                        performSearch();
+                    }
+                });
             }
-
+            
             async handleFiles(files) {
                 this.updateStatus("Processing files...");
                 const fileArray = Array.from(files);
                 this.showLoading();
-
                 for (const file of fileArray) {
                     if (file.size > 50 * 1024 * 1024) { // Skip files larger than 50MB
                         continue;
                     }
-
                     const content = await this.readFile(file);
                     const fileData = {
                         name: file.name,
@@ -641,17 +903,16 @@
                         type: this.getFileType(file.name),
                         lastModified: file.lastModified
                     };
-
                     this.files.push(fileData);
                     this.indexFile(fileData);
                 }
-
                 this.updateStats();
                 this.updateWorkspaceInfo();
                 this.clearResults();
                 this.updateStatus(`Loaded ${fileArray.length} files successfully`);
+                this.showNotification(`Loaded ${fileArray.length} files successfully`, 'success');
             }
-
+            
             readFile(file) {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -660,16 +921,15 @@
                     reader.readAsText(file);
                 });
             }
-
+            
             getFileType(filename) {
                 const ext = filename.substring(filename.lastIndexOf('.'));
                 return ext.toLowerCase();
             }
-
+            
             indexFile(fileData) {
                 const words = fileData.content.toLowerCase().split(/\W+/);
                 const lines = fileData.content.split('\n');
-                
                 words.forEach((word, index) => {
                     if (word.length > 2) {
                         if (!this.searchIndex.has(word)) {
@@ -682,18 +942,15 @@
                         });
                     }
                 });
-
                 // Index function names, variables, etc.
                 this.indexCodeStructures(fileData, lines);
             }
-
+            
             indexCodeStructures(fileData, lines) {
                 const functionRegex = /function\s+(\w+)|def\s+(\w+)|class\s+(\w+)/g;
                 const variableRegex = /(?:var|let|const)\s+(\w+)|(\w+)\s*=/g;
-                
                 lines.forEach((line, lineNumber) => {
                     let match;
-                    
                     // Index functions
                     while ((match = functionRegex.exec(line)) !== null) {
                         const funcName = match[1] || match[2] || match[3];
@@ -709,7 +966,6 @@
                             });
                         }
                     }
-                    
                     // Index variables
                     while ((match = variableRegex.exec(line)) !== null) {
                         const varName = match[1] || match[2];
@@ -727,61 +983,66 @@
                     }
                 });
             }
-
+            
             getContext(content, searchTerm) {
                 const index = content.toLowerCase().indexOf(searchTerm.toLowerCase());
                 if (index === -1) return '';
-                
                 const start = Math.max(0, index - 50);
                 const end = Math.min(content.length, index + searchTerm.length + 50);
                 return content.substring(start, end);
             }
-
+            
             search(query) {
                 if (!query.trim()) {
                     this.clearResults();
                     this.updateStatus("Enter a search query");
                     return;
                 }
-
+                
+                // Add to search history
+                this.addToSearchHistory(query);
+                
                 this.updateStatus(`Searching for: ${query}`);
                 const startTime = performance.now();
                 const searchMode = document.getElementById('search-mode').value;
                 const fileType = document.getElementById('file-type').value;
                 const caseSensitive = document.getElementById('case-sensitive').checked;
                 const regexMode = document.getElementById('regex-mode').checked;
-
+                const wholeWord = document.getElementById('whole-word').checked;
+                
                 let results = [];
                 this.matchCount = 0;
-
+                
                 if (searchMode === 'filename') {
                     results = this.searchFilenames(query, fileType, caseSensitive, regexMode);
                 } else if (searchMode === 'function') {
                     results = this.searchFunctions(query, fileType, caseSensitive);
                 } else if (searchMode === 'variable') {
                     results = this.searchVariables(query, fileType, caseSensitive);
+                } else if (searchMode === 'comment') {
+                    results = this.searchComments(query, fileType, caseSensitive, regexMode, wholeWord);
                 } else {
-                    results = this.searchContent(query, fileType, caseSensitive, regexMode);
+                    results = this.searchContent(query, fileType, caseSensitive, regexMode, wholeWord);
                 }
-
+                
                 const endTime = performance.now();
                 this.displayResults(results, endTime - startTime);
                 this.updateStatus(`Found ${results.length} results in ${Math.round(endTime - startTime)}ms`);
+                this.showNotification(`Found ${results.length} results`, 'success');
             }
-
-            searchContent(query, fileType, caseSensitive, regexMode) {
+            
+            searchContent(query, fileType, caseSensitive, regexMode, wholeWord) {
                 const results = [];
                 const searchTerm = caseSensitive ? query : query.toLowerCase();
-                
                 this.files.forEach(file => {
                     if (fileType && !file.name.endsWith(fileType)) return;
-                    
                     const content = caseSensitive ? file.content : file.content.toLowerCase();
                     const lines = file.content.split('\n');
                     
                     if (regexMode) {
                         try {
-                            const regex = new RegExp(searchTerm, caseSensitive ? 'g' : 'gi');
+                            const flags = caseSensitive ? 'g' : 'gi';
+                            const regex = new RegExp(searchTerm, flags);
                             lines.forEach((line, index) => {
                                 const matches = line.match(regex);
                                 if (matches) {
@@ -796,37 +1057,105 @@
                             });
                         } catch (e) {
                             this.updateStatus("Invalid regular expression");
+                            this.showNotification("Invalid regular expression", 'error');
                         }
                     } else {
                         lines.forEach((line, index) => {
                             const searchLine = caseSensitive ? line : line.toLowerCase();
-                            if (searchLine.includes(searchTerm)) {
-                                const matches = (searchLine.match(new RegExp(searchTerm, 'g')) || []).length;
-                                results.push({
-                                    file: file,
-                                    line: index + 1,
-                                    content: line,
-                                    matches: matches
-                                });
-                                this.matchCount += matches;
+                            let found = false;
+                            
+                            if (wholeWord) {
+                                const regex = new RegExp(`\\b${this.escapeRegExp(searchTerm)}\\b`, caseSensitive ? 'g' : 'gi');
+                                const matches = searchLine.match(regex);
+                                if (matches) {
+                                    found = true;
+                                    results.push({
+                                        file: file,
+                                        line: index + 1,
+                                        content: line,
+                                        matches: matches.length
+                                    });
+                                    this.matchCount += matches.length;
+                                }
+                            } else {
+                                if (searchLine.includes(searchTerm)) {
+                                    const matches = (searchLine.match(new RegExp(this.escapeRegExp(searchTerm), 'g')) || []).length;
+                                    found = true;
+                                    results.push({
+                                        file: file,
+                                        line: index + 1,
+                                        content: line,
+                                        matches: matches
+                                    });
+                                    this.matchCount += matches;
+                                }
                             }
                         });
                     }
                 });
-                
                 return results.sort((a, b) => b.matches - a.matches);
             }
-
-            searchFilenames(query, fileType, caseSensitive, regexMode) {
+            
+            searchComments(query, fileType, caseSensitive, regexMode, wholeWord) {
                 const results = [];
                 const searchTerm = caseSensitive ? query : query.toLowerCase();
-                
                 this.files.forEach(file => {
                     if (fileType && !file.name.endsWith(fileType)) return;
                     
+                    const lines = file.content.split('\n');
+                    lines.forEach((line, index) => {
+                        // Simple comment detection (can be enhanced)
+                        if (line.trim().startsWith('//') || 
+                            line.trim().startsWith('#') || 
+                            line.trim().startsWith('/*') || 
+                            line.trim().startsWith('<!--')) {
+                            
+                            const searchLine = caseSensitive ? line : line.toLowerCase();
+                            let found = false;
+                            
+                            if (regexMode) {
+                                try {
+                                    const flags = caseSensitive ? 'g' : 'gi';
+                                    const regex = new RegExp(searchTerm, flags);
+                                    if (regex.test(searchLine)) {
+                                        found = true;
+                                    }
+                                } catch (e) {
+                                    // Invalid regex
+                                }
+                            } else if (wholeWord) {
+                                const regex = new RegExp(`\\b${this.escapeRegExp(searchTerm)}\\b`, caseSensitive ? 'g' : 'gi');
+                                if (regex.test(searchLine)) {
+                                    found = true;
+                                }
+                            } else {
+                                if (searchLine.includes(searchTerm)) {
+                                    found = true;
+                                }
+                            }
+                            
+                            if (found) {
+                                results.push({
+                                    file: file,
+                                    line: index + 1,
+                                    content: line,
+                                    matches: 1
+                                });
+                                this.matchCount++;
+                            }
+                        }
+                    });
+                });
+                return results;
+            }
+            
+            searchFilenames(query, fileType, caseSensitive, regexMode) {
+                const results = [];
+                const searchTerm = caseSensitive ? query : query.toLowerCase();
+                this.files.forEach(file => {
+                    if (fileType && !file.name.endsWith(fileType)) return;
                     const filename = caseSensitive ? file.name : file.name.toLowerCase();
                     let match = false;
-                    
                     if (regexMode) {
                         try {
                             const regex = new RegExp(searchTerm, caseSensitive ? '' : 'i');
@@ -837,7 +1166,6 @@
                     } else {
                         match = filename.includes(searchTerm);
                     }
-                    
                     if (match) {
                         results.push({
                             file: file,
@@ -847,14 +1175,12 @@
                         this.matchCount++;
                     }
                 });
-                
                 return results.sort((a, b) => b.relevance - a.relevance);
             }
-
+            
             searchFunctions(query, fileType, caseSensitive) {
                 const results = [];
                 const searchKey = `func:${caseSensitive ? query : query.toLowerCase()}`;
-                
                 if (this.searchIndex.has(searchKey)) {
                     this.searchIndex.get(searchKey).forEach(item => {
                         if (!fileType || item.file.name.endsWith(fileType)) {
@@ -863,14 +1189,12 @@
                         }
                     });
                 }
-                
                 return results;
             }
-
+            
             searchVariables(query, fileType, caseSensitive) {
                 const results = [];
                 const searchKey = `var:${caseSensitive ? query : query.toLowerCase()}`;
-                
                 if (this.searchIndex.has(searchKey)) {
                     this.searchIndex.get(searchKey).forEach(item => {
                         if (!fileType || item.file.name.endsWith(fileType)) {
@@ -879,37 +1203,33 @@
                         }
                     });
                 }
-                
                 return results;
             }
-
+            
             calculateRelevance(text, searchTerm) {
                 const exactMatch = text === searchTerm ? 100 : 0;
                 const startsWith = text.startsWith(searchTerm) ? 50 : 0;
                 const contains = text.includes(searchTerm) ? 25 : 0;
                 return exactMatch + startsWith + contains;
             }
-
+            
             displayResults(results, searchTime) {
                 this.currentResults = results;
-                
                 document.getElementById('search-results').textContent = results.length;
                 document.getElementById('search-time').textContent = `${Math.round(searchTime)}ms`;
                 document.getElementById('match-count').textContent = this.matchCount;
-                
                 this.renderFileResults(results);
                 this.renderContentResults(results);
                 this.renderVisualization(results);
+                this.renderCodeView(results[0]);
             }
-
+            
             renderFileResults(results) {
                 const fileResults = document.getElementById('file-results');
-                
                 if (results.length === 0) {
                     fileResults.innerHTML = '<div class="no-results"><p>No files found matching your search</p></div>';
                     return;
                 }
-
                 // Group results by file
                 const fileMap = new Map();
                 results.forEach(result => {
@@ -922,15 +1242,13 @@
                     }
                     fileMap.get(fileName).matches += result.matches || 1;
                 });
-
                 const fileArray = Array.from(fileMap.values())
                     .sort((a, b) => b.matches - a.matches)
                     .slice(0, 50); // Limit to top 50 files
-
                 fileResults.innerHTML = fileArray.map(item => `
                     <div class="result-item" onclick="selectFile('${item.file.name}')">
                         <div class="result-file">
-                            <div class="file-icon">📄</div>
+                            <div class="file-icon"><i class="fas fa-file-code"></i></div>
                             ${item.file.name}
                         </div>
                         <div class="result-path">${item.file.path}</div>
@@ -940,22 +1258,19 @@
                     </div>
                 `).join('');
             }
-
+            
             renderContentResults(results) {
                 const contentResults = document.getElementById('content-results');
                 const query = document.getElementById('search-input').value;
-                
                 if (results.length === 0) {
                     contentResults.innerHTML = '<div class="no-results"><p>No content matches found</p></div>';
                     return;
                 }
-
                 const limitedResults = results.slice(0, 100); // Limit to top 100 matches
-                
                 contentResults.innerHTML = limitedResults.map(result => `
                     <div class="result-item" onclick="showVisualization('${result.file.name}', ${result.line || 0})">
                         <div class="result-file">
-                            <div class="file-icon">📄</div>
+                            <div class="file-icon"><i class="fas fa-file-code"></i></div>
                             ${result.file.name}
                         </div>
                         <div class="result-path">Line ${result.line || 'Unknown'}</div>
@@ -963,16 +1278,14 @@
                     </div>
                 `).join('');
             }
-
+            
             renderVisualization(results) {
                 const container = document.getElementById('visualization-container');
                 const query = document.getElementById('search-input').value;
-                
                 if (results.length === 0) {
                     container.innerHTML = '<div class="no-results"><p>No results to visualize</p></div>';
                     return;
                 }
-
                 // Group results by file
                 const fileMap = new Map();
                 results.forEach(result => {
@@ -985,24 +1298,20 @@
                     }
                     fileMap.get(fileName).matches.push(result);
                 });
-
                 // Get top 3 files with most matches
                 const topFiles = Array.from(fileMap.values())
                     .sort((a, b) => b.matches.length - a.matches.length)
                     .slice(0, 3);
-
                 container.innerHTML = topFiles.map(fileData => {
                     const { file, matches } = fileData;
                     const lines = file.content.split('\n');
                     const matchLines = matches.map(m => m.line).filter(l => l);
-                    
                     // Get context around matches
                     let context = '';
                     for (let i = 0; i < lines.length; i++) {
                         const lineNum = i + 1;
                         const isMatch = matchLines.includes(lineNum);
                         const lineContent = lines[i];
-                        
                         if (isMatch) {
                             context += `<div class="visualization-highlight">
                                 <span class="line-number">${lineNum}</span>
@@ -1015,11 +1324,10 @@
                             </div>`;
                         }
                     }
-                    
                     return `
                         <div class="visualization-item">
                             <div class="result-file">
-                                <div class="file-icon">📄</div>
+                                <div class="file-icon"><i class="fas fa-file-code"></i></div>
                                 ${file.name}
                             </div>
                             <div class="visualization-path">${file.path}</div>
@@ -1031,31 +1339,65 @@
                     `;
                 }).join('');
             }
-
+            
+            renderCodeView(result) {
+                if (!result) return;
+                
+                const file = result.file;
+                const lines = file.content.split('\n');
+                const lineNumbers = document.getElementById('line-numbers');
+                const codeContent = document.getElementById('code-content');
+                
+                lineNumbers.innerHTML = '';
+                codeContent.innerHTML = '';
+                
+                lines.forEach((line, index) => {
+                    const lineNum = index + 1;
+                    lineNumbers.innerHTML += `<div>${lineNum}</div>`;
+                    
+                    // Highlight search term in line
+                    const query = document.getElementById('search-input').value;
+                    let highlightedLine = line;
+                    
+                    if (query) {
+                        highlightedLine = this.highlightMatches(line, query);
+                    }
+                    
+                    codeContent.innerHTML += `<div>${highlightedLine}</div>`;
+                });
+            }
+            
             highlightMatches(text, searchTerm) {
                 if (!searchTerm || !text) return text;
-                
                 const caseSensitive = document.getElementById('case-sensitive').checked;
                 const regexMode = document.getElementById('regex-mode').checked;
+                const wholeWord = document.getElementById('whole-word').checked;
                 
                 try {
                     if (regexMode) {
-                        const regex = new RegExp(`(${searchTerm})`, caseSensitive ? 'g' : 'gi');
+                        const flags = caseSensitive ? 'g' : 'gi';
+                        const regex = new RegExp(`(${searchTerm})`, flags);
                         return text.replace(regex, '<span class="highlight">$1</span>');
                     } else {
-                        const flags = caseSensitive ? 'g' : 'gi';
-                        const regex = new RegExp(`(${this.escapeRegExp(searchTerm)})`, flags);
+                        let flags = caseSensitive ? 'g' : 'gi';
+                        let pattern = this.escapeRegExp(searchTerm);
+                        
+                        if (wholeWord) {
+                            pattern = `\\b${pattern}\\b`;
+                        }
+                        
+                        const regex = new RegExp(`(${pattern})`, flags);
                         return text.replace(regex, '<span class="highlight">$1</span>');
                     }
                 } catch (e) {
                     return text;
                 }
             }
-
+            
             escapeRegExp(string) {
                 return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             }
-
+            
             formatFileSize(bytes) {
                 if (bytes === 0) return '0 Bytes';
                 const k = 1024;
@@ -1063,19 +1405,19 @@
                 const i = Math.floor(Math.log(bytes) / Math.log(k));
                 return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
             }
-
+            
             updateStats() {
                 document.getElementById('total-files').textContent = this.files.length;
                 document.getElementById('indexed-files').textContent = this.files.length;
             }
-
+            
             updateWorkspaceInfo() {
                 const status = this.files.length > 0 ? 
                     `${this.files.length} files loaded` : 
                     'No workspace loaded';
                 document.getElementById('workspace-status').textContent = status;
             }
-
+            
             showLoading() {
                 document.getElementById('file-results').innerHTML = `
                     <div class="loading">
@@ -1084,7 +1426,7 @@
                     </div>
                 `;
             }
-
+            
             clearResults() {
                 document.getElementById('file-results').innerHTML = '<div class="no-results"><p>Load files and start searching to see results</p></div>';
                 document.getElementById('content-results').innerHTML = '<div class="no-results"><p>Content matches will appear here</p></div>';
@@ -1093,22 +1435,156 @@
                 document.getElementById('match-count').textContent = '0';
                 document.getElementById('visualization-container').innerHTML = '<div class="no-results"><p>Search results will be visualized here with context</p></div>';
             }
-
+            
             debounceSearch() {
                 clearTimeout(this.searchTimeout);
                 this.searchTimeout = setTimeout(() => {
                     this.search(document.getElementById('search-input').value);
                 }, 300);
             }
-
+            
             updateStatus(message) {
                 document.getElementById('status-message').textContent = message;
             }
+            
+            saveResults() {
+                if (this.currentResults.length === 0) {
+                    this.showNotification("No results to save", 'error');
+                    return;
+                }
+                
+                const data = {
+                    query: document.getElementById('search-input').value,
+                    timestamp: new Date().toISOString(),
+                    results: this.currentResults
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `cfinder-results-${Date.now()}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                this.showNotification("Results saved successfully", 'success');
+            }
+            
+            exportResults() {
+                if (this.currentResults.length === 0) {
+                    this.showNotification("No results to export", 'error');
+                    return;
+                }
+                
+                let csvContent = "File,Line,Content\n";
+                this.currentResults.forEach(result => {
+                    const file = result.file.name.replace(/"/g, '""');
+                    const line = result.line || '';
+                    const content = result.content.replace(/"/g, '""');
+                    csvContent += `"${file}","${line}","${content}"\n`;
+                });
+                
+                const blob = new Blob([csvContent], {type: 'text/csv'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `cfinder-export-${Date.now()}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                this.showNotification("Results exported successfully", 'success');
+            }
+            
+            addToSearchHistory(query) {
+                // Add to recent searches
+                const recentSearches = document.getElementById('recent-searches');
+                const existingTags = recentSearches.querySelectorAll('.recent-search-tag');
+                const existingQueries = Array.from(existingTags).map(tag => tag.textContent);
+                
+                if (!existingQueries.includes(query)) {
+                    const tag = document.createElement('div');
+                    tag.className = 'recent-search-tag';
+                    tag.textContent = query;
+                    recentSearches.insertBefore(tag, recentSearches.firstChild);
+                    
+                    // Limit to 10 recent searches
+                    if (existingTags.length >= 9) {
+                        recentSearches.removeChild(recentSearches.lastChild);
+                    }
+                }
+                
+                // Add to history
+                const historyItem = {
+                    query: query,
+                    timestamp: new Date().toISOString(),
+                    results: this.currentResults.length
+                };
+                
+                this.searchHistory.unshift(historyItem);
+                // Keep only last 20 items
+                if (this.searchHistory.length > 20) {
+                    this.searchHistory = this.searchHistory.slice(0, 20);
+                }
+                
+                localStorage.setItem('cfinderHistory', JSON.stringify(this.searchHistory));
+                this.renderSearchHistory();
+            }
+            
+            loadRecentSearches() {
+                const recentSearches = document.getElementById('recent-searches');
+                const recentQueries = new Set();
+                
+                // Get recent queries from search history
+                this.searchHistory.slice(0, 10).forEach(item => {
+                    recentQueries.add(item.query);
+                });
+                
+                // Add to UI
+                recentQueries.forEach(query => {
+                    const tag = document.createElement('div');
+                    tag.className = 'recent-search-tag';
+                    tag.textContent = query;
+                    recentSearches.appendChild(tag);
+                });
+            }
+            
+            renderSearchHistory() {
+                const historyContainer = document.getElementById('search-history');
+                if (this.searchHistory.length === 0) {
+                    historyContainer.innerHTML = '<div class="no-results"><p>No search history yet</p></div>';
+                    return;
+                }
+                
+                historyContainer.innerHTML = this.searchHistory.map(item => `
+                    <div class="history-item" onclick="document.getElementById('search-input').value='${item.query}'; performSearch();">
+                        <div class="history-query">${item.query}</div>
+                        <div class="history-meta">
+                            ${new Date(item.timestamp).toLocaleString()} • ${item.results} results
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            showNotification(message, type = 'info') {
+                const notification = document.getElementById('notification');
+                const messageEl = document.getElementById('notification-message');
+                
+                messageEl.textContent = message;
+                notification.className = 'notification show ' + type;
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
         }
-
+        
         // Initialize CFinder
         const cfinder = new CFinder();
-
+        
         // Global functions
         function performSearch() {
             const query = document.getElementById('search-input').value.trim();
@@ -1116,21 +1592,23 @@
                 cfinder.search(query);
             }
         }
-
+        
         function selectFile(filename) {
             const file = cfinder.files.find(f => f.name === filename);
             if (file) {
                 // For demo purposes - in a real app this would open the file
                 cfinder.updateStatus(`Selected file: ${filename}`);
+                cfinder.showNotification(`Selected file: ${filename}`, 'info');
             }
         }
-
+        
         function showVisualization(filename, lineNumber) {
             const file = cfinder.files.find(f => f.name === filename);
             if (file) {
                 // Scroll to visualization and highlight the specific match
                 cfinder.updateStatus(`Showing context for ${filename} at line ${lineNumber}`);
                 document.getElementById('visualization-container').scrollIntoView({ behavior: 'smooth' });
+                cfinder.showNotification(`Showing context for ${filename}`, 'info');
             }
         }
     </script>

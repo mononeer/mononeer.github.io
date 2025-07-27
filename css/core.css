@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+:root{
+  --bg:#000;
+  --fg:#00BFFF;
+  --glow:#00BFFF33;
+  --glass:#111a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Courier Prime',monospace;
+  background:linear-gradient(135deg,#000 0%,#001122 100%);
+  color:var(--fg);
+  line-height:1.6;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+header{
+  padding:1.5rem 2rem;
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--glow);
+}
+nav a{margin-right:1rem;color:var(--fg);font-weight:700;text-decoration:none}
+nav a:hover{text-decoration:underline}
+main{flex:1;padding:2rem}
+section{max-width:800px;margin:auto}
+.card{
+  background:var(--glass);
+  border:1px solid var(--glow);
+  border-radius:12px;
+  padding:1.5rem;
+  margin-bottom:1.5rem;
+  box-shadow:0 0 12px var(--glow);
+}
+footer{
+  text-align:center;
+  padding:1rem;
+  font-size:.8rem;
+  border-top:1px solid var(--glow);
+}
+#social-bar svg{width:20px;height:20px;fill:var(--fg);margin-right:.6rem}
+#social-bar a:hover svg{fill:#fff}
+form label{display:block;margin:.6rem 0}
+form input,form textarea{
+  width:100%;padding:.6rem;background:#111;border:1px solid var(--glow);color:var(--fg);font-family:inherit;border-radius:4px
+}
+form button{
+  padding:.6rem 1.2rem;background:var(--fg);color:var(--bg);border:none;font-weight:700;cursor:pointer;border-radius:4px
+}
+form button:hover{background:#fff}

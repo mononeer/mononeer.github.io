@@ -1,1 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Mononeer — Projects</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<header>
+  <h1>Projects</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="blog.html">Blog</a>
+  </nav>
+</header>
 
+<main>
+  <ul id="repo-list">Loading…</ul>
+</main>
+
+<footer></footer>
+
+<script type="module">
+import '../js/common.js';
+
+const list = document.getElementById('repo-list');
+fetch('https://api.github.com/users/mononeer/repos?per_page=100&sort=updated')
+  .then(r => r.json())
+  .then(repos => {
+    list.innerHTML = '';
+    repos.forEach(r => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <strong><a href="${r.html_url}" target="_blank">${r.name}</a></strong>
+        <br><small>${r.description || ''}</small>
+        <br><small>Updated: ${new Date(r.updated_at).toLocaleString()}</small>
+      `;
+      list.appendChild(li);
+    });
+  });
+</script>
+</body>
+</html>

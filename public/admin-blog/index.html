@@ -63,24 +63,26 @@ dateIn.value = new Date().toISOString().slice(0,10);
 
 // publish
 $('#publish').addEventListener('click', async () => {
-  const pw = $('#pw').value;
-  if (pw !== 'mono1234') { alert('Wrong password'); return; }
-
   const payload = {
     title: titleIn.value.trim(),
     date: dateIn.value,
-    body: bodyIn.value.trim()
+    body: bodyIn.value.trim(),
+    password: $('#pw').value
   };
-  const slug = payload.title.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
 
-  await fetch('./api/post', {
+  const res = await fetch('/api/post', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({...payload, slug})
+    body: JSON.stringify(payload)
   });
-  alert('Published!');
-  [titleIn,bodyIn].forEach(el=>el.value='');
-  updatePreview();
+
+  if (res.ok) {
+    alert('Published!');
+    [titleIn,bodyIn].forEach(el=>el.value='');
+    updatePreview();
+  } else {
+    alert('Error: ' + await res.text());
+  }
 });
 
 function $(s){return document.querySelector(s)}

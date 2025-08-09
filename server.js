@@ -1,4 +1,3 @@
-// npm i express body-parser js-yaml chokidar
 import express from 'express';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import yaml from 'js-yaml';
@@ -12,14 +11,11 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static('pages'));
+app.use(express.static('public'));
 app.use(express.json());
-app.use('/css', express.static('css'));
-app.use('/js', express.static('js'));
-app.use('/posts', express.static('posts'));
 
-const POST_DIR = path.join(__dirname, 'posts');
-if (!existsSync(POST_DIR)) mkdirSync(POST_DIR);
+const POST_DIR = path.join(__dirname, 'public', 'posts');
+if (!existsSync(POST_DIR)) mkdirSync(POST_DIR, { recursive: true });
 
 // build index.json for blog-engine.js
 function buildIndex() {
@@ -40,7 +36,10 @@ app.get('/events', (req, res) => {
 
 // publish post
 app.post('/api/post', (req, res) => {
-  const { title, date, body } = req.body;
+  const { title, date, body, password } = req.body;
+  if (password !== (process.env.PASSWORD || 'mono1234')) {
+    return res.status(401).send('Unauthorized');
+  }
   const slug = title.toLowerCase().replace(/[^\w]/g,'-');
   const yamlStr = yaml.dump({ title, date }) + '---\n' + body;
   writeFileSync(path.join(POST_DIR, `${slug}.yml`), yamlStr);
@@ -48,4 +47,4 @@ app.post('/api/post', (req, res) => {
   res.sendStatus(201);
 });
 
-app.listen(PORT, () => console.log(`http://localhost:${PORT}/pages/index.html`));
+app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

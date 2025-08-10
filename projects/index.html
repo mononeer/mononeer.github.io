@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Rendani's portfolio</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter-font@4.0.1/css/inter.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="terminal">
+        <nav class="terminal-nav">
+            <div class="breadcrumbs">
+                <span class="path">~/portfolio/projects</span>
+            </div>
+            <div class="nav-links">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/about/">About</a>
+                <a class="nav-link" href="/projects/" aria-current="page">Projects</a>
+                <a class="nav-link" href="/apps/">Apps</a>
+                <a class="nav-link" href="/gallery/">Gallery</a>
+                <a class="nav-link" href="/library/">Library</a>
+                <a class="nav-link" href="/github/">GitHub</a>
+                <a class="nav-link" href="/social/">Social</a>
+                <a class="nav-link" href="/contact/">Contact</a>
+            </div>
+            <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        </nav>
+        <main class="terminal-content">
+            <section class="content active" data-view="projects">
+                <h2>My projects</h2>
+                <div class="grid-container">
+                    <div class="project-card slide-up">
+                        <h3>AI-powered task manager</h3>
+                        <p>A web app for task management with AI-driven prioritization</p>
+                        <span class="project-tech">React, Python, Flask, TensorFlow</span>
+                        <a href="https://github.com/mononeer/task-manager" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                    </div>
+                    <div class="project-card slide-up" style="--delay: 0.2s">
+                        <h3>Real-time chat app</h3>
+                        <p>Scalable chat application with WebSocket integration</p>
+                        <span class="project-tech">Node.js, Express, Socket.io, MongoDB</span>
+                        <a href="https://github.com/mononeer/chat-app" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                    </div>
+                    <div class="project-card slide-up" style="--delay: 0.4s">
+                        <h3>Image recognition tool</h3>
+                        <p>ML-based tool for classifying images with a web interface</p>
+                        <span class="project-tech">Python, TensorFlow, React, AWS</span>
+                        <a href="https://github.com/mononeer/image-recognition" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="terminal-footer">
+            <span class="hint">Built by Rendani Manugeni &copy; 2025</span>
+        </footer>
+    </div>
+    <script src="/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library | Rendani's portfolio</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter-font@4.0.1/css/inter.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="terminal">
+        <nav class="terminal-nav">
+            <div class="breadcrumbs">
+                <span class="path">~/portfolio/library</span>
+            </div>
+            <div class="nav-links">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/about/">About</a>
+                <a class="nav-link" href="/projects/">Projects</a>
+                <a class="nav-link" href="/apps/">Apps</a>
+                <a class="nav-link" href="/gallery/">Gallery</a>
+                <a class="nav-link" href="/library/" aria-current="page">Library</a>
+                <a class="nav-link" href="/github/">GitHub</a>
+                <a class="nav-link" href="/social/">Social</a>
+                <a class="nav-link" href="/contact/">Contact</a>
+            </div>
+            <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        </nav>
+        <main class="terminal-content">
+            <section class="content active" data-view="library">
+                <h2>My library</h2>
+                <div class="library-grid">
+                    <div class="library-card slide-up">
+                        <time datetime="2025-01-15">Jan 15, 2025</time>
+                        <h3>Deep learning with Python</h3>
+                        <p>A comprehensive guide to building neural networks</p>
+                        <a href="https://www.example.com/deep-learning" class="library-link" target="_blank" rel="noopener noreferrer">View resource</a>
+                    </div>
+                    <div class="library-card slide-up" style="--delay: 0.2s">
+                        <time datetime="2024-12-01">Dec 1, 2024</time>
+                        <h3>React documentation</h3>
+                        <p>Official docs for building dynamic UIs with React</p>
+                        <a href="https://react.dev" class="library-link" target="_blank" rel="noopener noreferrer">View resource</a>
+                    </div>
+                    <div class="library-card slide-up" style="--delay: 0.4s">
+                        <time datetime="2024-11-10">Nov 10, 2024</time>
+                        <h3>Node.js best practices</h3>
+                        <p>Guide to writing scalable and maintainable Node.js code</p>
+                        <a href="https://github.com/goldbergyoni/nodebestpractices" class="library-link" target="_blank" rel="noopener noreferrer">View resource</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="terminal-footer">
+            <span class="hint">Built by Rendani Manugeni &copy; 2025</span>
+        </footer>
+    </div>
+    <script src="/main.js" defer></script>
+</body>
+</html>

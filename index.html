@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore | Mononeer</title>
-    <link rel="icon" type="image/png" href="/src/assets/favicon.png">
+    <title>Home | Mononeer</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter-font@4.0.1/css/inter.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css">
-    <link rel="stylesheet" href="/src/css/styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="background"></div>
@@ -17,104 +17,23 @@
                 <span class="path">~/portfolio</span>
             </div>
             <div class="nav-links">
-                <button class="nav-link" data-view="home">Home</button>
-                <button class="nav-link" data-view="about">About</button>
-                <button class="nav-link" data-view="projects">Projects</button>
-                <button class="nav-link" data-view="apps">Apps</button>
-                <button class="nav-link" data-view="gallery">Gallery</button>
-                <button class="nav-link" data-view="library">Library</button>
-                <button class="nav-link" data-view="github">GitHub</button>
-                <button class="nav-link" data-view="social">Social</button>
+                <button class="nav-link" data-view="home" aria-current="page">Home</button>
+                <a class="nav-link" href="/about/">About</a>
+                <a class="nav-link" href="/projects/">Projects</a>
+                <a class="nav-link" href="/apps/">Apps</a>
+                <a class="nav-link" href="/gallery/">Gallery</a>
+                <a class="nav-link" href="/library/">Library</a>
+                <a class="nav-link" href="/github/">GitHub</a>
+                <a class="nav-link" href="/social/">Social</a>
+                <a class="nav-link" href="/contact/">Contact</a>
             </div>
         </nav>
         <main class="terminal-content">
             <section class="content active" data-view="home">
                 <div class="hero">
-                    <img src="/src/assets/logo.png" alt="Rendani's logo" class="logo" draggable="false">
+                    <img src="/assets/logo.png" alt="Rendani's logo" class="logo" draggable="false">
                     <h1 class="typewriter">Welcome to my digital portfolio</h1>
                     <p>Explore my work as a full-stack developer and ML enthusiast</p>
-                </div>
-            </section>
-            <section class="content" data-view="about">
-                <h2>About me</h2>
-                <div class="file-content">
-                    <p class="slide-up">Hi, I'm Rendani Manugeni</p>
-                    <p class="slide-up" style="--delay: 0.2s">Full-stack developer and machine learning enthusiast</p>
-                    <p class="slide-up" style="--delay: 0.4s">Crafting intelligent web and AI solutions</p>
-                    <div class="skills slide-up" style="--delay: 0.6s">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Node.js</span>
-                    </div>
-                </div>
-            </section>
-            <section class="content" data-view="apps">
-                <h2>Apps</h2>
-                <div class="grid-container">
-                    <a href="/apps/noma-ai/" class="app-card" target="_blank" rel="noopener noreferrer">
-                        <div class="app-icon">🤖</div>
-                        <h3>AI chat</h3>
-                        <p>Generative AI conversation interface and playground</p>
-                        <span class="app-tech">React, Node.js, TensorFlow</span>
-                    </a>
-                </div>
-            </section>
-            <section class="content" data-view="github">
-                <h2>GitHub</h2>
-                <div class="github-stats">
-                    <div class="stat-card">
-                        <span class="stat-number" id="repo-count">0</span>
-                        <span class="stat-label">Repositories</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="star-count">0</span>
-                        <span class="stat-label">Stars</span>
-                    </div>
-                </div>
-                <img src="https://ghchart.rshah.org/mononeer" alt="GitHub contributions graph" class="github-graph" draggable="false">
-                <div id="repos" class="repos-container"></div>
-            </section>
-            <section class="content" data-view="social">
-                <h2>Social</h2>
-                <div class="links">
-                    <a href="https://github.com/mononeer" class="social-link gh" target="_blank" rel="noopener noreferrer">
-                        <span class="social-icon"></span>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="https://youtube.com/@mononeer" class="social-link yt" target="_blank" rel="noopener noreferrer">
-                        <span class="social-icon"></span>
-                        <span>YouTube</span>
-                    </a>
-                </div>
-            </section>
-            <section class="content" data-view="projects">
-                <h2>Projects</h2>
-                <div class="file-content">
-                    <p>Projects section under construction</p>
-                </div>
-            </section>
-            <section class="content" data-view="library">
-                <h2>Library</h2>
-                <div class="library-grid">
-                    <div class="library-card">
-                        <time datetime="2025-01-01">Jan 1, 2025</time>
-                        <h3>Sample resource</h3>
-                        <p>A placeholder resource for the library</p>
-                        <a href="#" class="library-link">View resource</a>
-                    </div>
-                </div>
-            </section>
-            <section class="content" data-view="gallery">
-                <h2>Gallery</h2>
-                <div class="masonry-grid">
-                    <div class="gallery-item">
-                        <img src="/assets/" alt="Sample gallery image">
-                        <div class="gallery-overlay">
-                            <p>Sample image description</p>
-                        </div>
-                    </div>
                 </div>
             </section>
         </main>
@@ -122,6 +41,6 @@
             <span class="hint">Built by Rendani Manugeni &copy; 2025</span>
         </footer>
     </div>
-    <script src="/src/js/script.js" defer></script>
+    <script src="/main.js" defer></script>
 </body>
 </html>

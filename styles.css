@@ -39,6 +39,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     padding: 2rem;
+    transition: background-color 0.3s ease;
 }
 
 .background {
@@ -49,6 +50,7 @@ body {
     height: 100%;
     background: radial-gradient(circle at 20% 40%, rgba(59, 130, 246, 0.15), transparent 70%);
     z-index: -1;
+    transition: background 0.3s ease;
 }
 
 .terminal {
@@ -59,6 +61,14 @@ body {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--shadow);
+    transition: background 0.3s ease, border-color 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .terminal-nav {
@@ -68,6 +78,7 @@ body {
     padding: 1rem 1.5rem;
     background: var(--terminal-bg);
     border-bottom: 1px solid var(--terminal-border);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .breadcrumbs {
@@ -88,6 +99,7 @@ body {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9rem;
     color: var(--text-secondary);
+    text-decoration: none;
     cursor: pointer;
     transition: color 0.2s ease;
 }
@@ -103,16 +115,26 @@ body {
     font-weight: 500;
 }
 
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.theme-toggle:hover {
+    color: var(--accent-color);
+}
+
 .terminal-content {
     padding: 2rem;
     min-height: 400px;
+    transition: opacity 0.3s ease;
 }
 
 .content {
-    display: none;
-}
-
-.content.active {
     display: block;
 }
 
@@ -158,7 +180,8 @@ p {
     grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
 }
 
-.app-card {
+.app-card,
+.project-card {
     padding: 1.5rem;
     border-radius: 12px;
     background: rgba(59, 130, 246, 0.05);
@@ -168,7 +191,8 @@ p {
     color: inherit;
 }
 
-.app-card:hover {
+.app-card:hover,
+.project-card:hover {
     transform: translateY(-4px);
     border-color: var(--accent-light);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
@@ -179,12 +203,28 @@ p {
     margin-bottom: 1rem;
 }
 
-.app-tech {
+.app-tech,
+.project-tech {
     font-size: 0.85rem;
     color: var(--text-secondary);
     font-family: 'JetBrains Mono', monospace;
     margin-top: 1rem;
     display: block;
+}
+
+.project-link {
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+}
+
+.project-link:hover {
+    text-decoration: underline;
 }
 
 .masonry-grid {
@@ -196,6 +236,12 @@ p {
 @media (min-width: 768px) {
     .masonry-grid {
         column-count: 2;
+    }
+}
+
+@media (min-width: 1024px) {
+    .masonry-grid {
+        column-count: 3;
     }
 }
 
@@ -381,6 +427,79 @@ p {
 
 .social-icon {
     font-size: 1.2rem;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 500px;
+    margin-top: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--terminal-border);
+    border-radius: 8px;
+    background: var(--terminal-bg);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submit-btn {
+    background: var(--accent-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: var(--accent-light);
+}
+
+.form-status {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.form-status.success {
+    color: var(--success-color);
+}
+
+.form-status.error {
+    color: var(--error-color);
 }
 
 .terminal-footer {

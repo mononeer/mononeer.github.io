@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Rendani's portfolio</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter-font@4.0.1/css/inter.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="terminal">
+        <nav class="terminal-nav">
+            <div class="breadcrumbs">
+                <span class="path">~/portfolio/gallery</span>
+            </div>
+            <div class="nav-links">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/about/">About</a>
+                <a class="nav-link" href="/projects/">Projects</a>
+                <a class="nav-link" href="/apps/">Apps</a>
+                <a class="nav-link" href="/gallery/" aria-current="page">Gallery</a>
+                <a class="nav-link" href="/library/">Library</a>
+                <a class="nav-link" href="/github/">GitHub</a>
+                <a class="nav-link" href="/social/">Social</a>
+                <a class="nav-link" href="/contact/">Contact</a>
+            </div>
+            <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        </nav>
+        <main class="terminal-content">
+            <section class="content active" data-view="gallery">
+                <h2>My gallery</h2>
+                <div class="masonry-grid">
+                    <div class="gallery-item slide-up">
+                        <img src="/assets/project-screenshot1.jpg" alt="AI task manager screenshot">
+                        <div class="gallery-overlay">
+                            <p>AI task manager interface</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item slide-up" style="--delay: 0.2s">
+                        <img src="/assets/project-screenshot2.jpg" alt="Chat app screenshot">
+                        <div class="gallery-overlay">
+                            <p>Real-time chat app UI</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item slide-up" style="--delay: 0.4s">
+                        <img src="/assets/project-screenshot3.jpg" alt="Image recognition tool screenshot">
+                        <div class="gallery-overlay">
+                            <p>Image recognition tool demo</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="terminal-footer">
+            <span class="hint">Built by Rendani Manugeni &copy; 2025</span>
+        </footer>
+    </div>
+    <script src="/main.js" defer></script>
+</body>
+</html>

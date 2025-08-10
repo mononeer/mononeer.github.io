@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const views = document.querySelectorAll('.content');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const breadcrumbs = document.querySelector('.breadcrumbs .path');
     const reposContainer = document.getElementById('repos');
     const repoCount = document.getElementById('repo-count');
     const starCount = document.getElementById('star-count');
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+    const themeToggle = document.querySelector('.theme-toggle');
+    const terminalContent = document.querySelector('.terminal-content');
 
-    // Typewriter effect
+    // Typewriter effect (only for home page)
     const typewriter = document.querySelector('.typewriter');
     if (typewriter) {
         const text = typewriter.textContent;
@@ -22,29 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 50);
     }
 
-    // Navigation
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            const view = link.dataset.view;
-            switchView(view);
-            updateBreadcrumbs(`~/portfolio/${view === 'home' ? '' : view}`);
-            navLinks.forEach(l => l.removeAttribute('aria-current'));
-            link.setAttribute('aria-current', 'page');
+    // Theme toggle
+    if (themeToggle) {
+        const isDark = localStorage.getItem('theme') === 'dark';
+        if (isDark) {
+            document.body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        }
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            themeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
         });
-    });
-
-    function switchView(viewName) {
-        views.forEach(view => {
-            view.classList.toggle('active', view.dataset.view === viewName);
-        });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function updateBreadcrumbs(path) {
-        if (breadcrumbs) breadcrumbs.textContent = path;
+    // Page transition
+    if (terminalContent) {
+        terminalContent.style.opacity = '0';
+        setTimeout(() => {
+            terminalContent.style.opacity = '1';
+        }, 100);
     }
 
-    // GitHub integration
+    // GitHub integration (only for github page)
     if (reposContainer) {
         fetch('https://api.github.com/users/mononeer/repos?sort=updated&per_page=5', {
             headers: { 'Accept': 'application/vnd.github.v3+json' }
@@ -77,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Animate stats
+    // Animate stats (only for github page)
     function animateValue(element, start, end, duration) {
         if (!element) return;
         let startTimestamp = null;
@@ -116,5 +118,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (repoCount) repoCount.textContent = 'N/A';
                 if (starCount) starCount.textContent = 'N/A';
             });
+    }
+
+    // Contact form submission (only for contact page)
+    if (contactForm && formStatus) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            formStatus.textContent = 'Sending...';
+            formStatus.className = 'form-status';
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    formStatus.textContent = 'Message sent successfully!';
+                    formStatus.className = 'form-status success';
+                    contactForm.reset();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                formStatus.textContent = 'Failed to send message. Please try again.';
+                formStatus.className = 'form-status error';
+            }
+        });
     }
 });

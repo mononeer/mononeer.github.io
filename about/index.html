@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | Mononeer</title>
+    <title>About | Mononeer</title>
     <link rel="icon" type="image/png" href="/assets/favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter-font@4.0.1/css/inter.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css">
@@ -14,41 +14,34 @@
     <div class="terminal">
         <nav class="terminal-nav">
             <div class="breadcrumbs">
-                <span class="path">~/portfolio/contact</span>
+                <span class="path">~/portfolio/about</span>
             </div>
             <div class="nav-links">
                 <a class="nav-link" href="/">Home</a>
-                <a class="nav-link" href="/about/">About</a>
+                <a class="nav-link" href="/about/" aria-current="page">About</a>
                 <a class="nav-link" href="/projects/">Projects</a>
                 <a class="nav-link" href="/apps/">Apps</a>
                 <a class="nav-link" href="/gallery/">Gallery</a>
                 <a class="nav-link" href="/library/">Library</a>
                 <a class="nav-link" href="/github/">GitHub</a>
                 <a class="nav-link" href="/social/">Social</a>
-                <a class="nav-link" href="/contact/" aria-current="page">Contact</a>
+                <a class="nav-link" href="/contact/">Contact</a>
             </div>
         </nav>
         <main class="terminal-content">
-            <section class="content active" data-view="contact">
-                <h2>Contact me</h2>
+            <section class="content active" data-view="about">
+                <h2>About me</h2>
                 <div class="file-content">
-                    <p class="slide-up">Get in touch for collaborations or inquiries</p>
-                    <form id="contact-form" action="https://formspree.io/f/mpwlrazo" method="POST" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="Your email">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required placeholder="Your message"></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Send message</button>
-                    </form>
-                    <div id="form-status" class="form-status"></div>
+                    <p class="slide-up">Hi, I'm Rendani Manugeni</p>
+                    <p class="slide-up" style="--delay: 0.2s">Full-stack developer and machine learning enthusiast</p>
+                    <p class="slide-up" style="--delay: 0.4s">Crafting intelligent web and AI solutions</p>
+                    <div class="skills slide-up" style="--delay: 0.6s">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                    </div>
                 </div>
             </section>
         </main>
